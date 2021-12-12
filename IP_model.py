@@ -1,6 +1,7 @@
 from ortools.linear_solver import pywraplp
 import os
-import numpy as np
+
+os.chdir('data')
 
 def create_data_model(filename):
     data = {}
@@ -12,7 +13,7 @@ def create_data_model(filename):
             data['t'].append([int(x) for x in f.readline().split()[:data['N']+1]])
     return data
 
-data = create_data_model('data.txt')
+data = create_data_model('N6-K2.txt')
 print(data)
 
 solver = pywraplp.Solver.CreateSolver('CBC')
@@ -24,7 +25,7 @@ total_travel_time = sum(sum(i) for i in data['t'])
 x = [[[solver.IntVar(0, 1, f'x({u}, {i}, {j})') for j in range(data['N']+1)] for i in range(data['N']+1)] for u in range(data['K'])]
 y = [solver.IntVar(0, total_fix_time, f'y({u})') for u in range(data['K'])]
 z = [solver.IntVar(0, total_fix_time + total_travel_time, f'z({u})') for u in range(data['K'])]
-a = solver.IntVar(0, total_fix_time + total_travel_time, 'a')
+w = solver.IntVar(0, total_fix_time + total_travel_time, 'w')
 
 for i in range(1, data['N']+1):
     c1 = solver.Constraint(1, 1)
@@ -80,11 +81,11 @@ for k in range(data['K']):
 for k in range(data['K']):
     c8 = solver.Constraint(0, INF)
     c8.SetCoefficient(z[k], -1)
-    c8.SetCoefficient(a, 1)
+    c8.SetCoefficient(w, 1)
 
 # Objective
 obj = solver.Objective()
-obj.SetCoefficient(a, 1)
+obj.SetCoefficient(w, 1)
 obj.SetMinimization()
 
 rs = solver.Solve()
