@@ -13,7 +13,7 @@ def create_data_model(filename):
             data['t'].append([int(x) for x in f.readline().split()[:data['N']+1]])
     return data
 
-data = create_data_model('N6-K2.txt')
+data = create_data_model('N3-K6.txt')
 print(data)
 
 solver = pywraplp.Solver.CreateSolver('CBC')
