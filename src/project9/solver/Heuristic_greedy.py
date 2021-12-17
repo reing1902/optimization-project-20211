@@ -6,7 +6,9 @@ def create_data(filename):
         d = [int(x) for x in f.readline().split()]
         t = [[int(x) for x in f.readline().split()] for i in range(N+1)]
     return N, K, d, t
-N, K, d, t = create_data('data_test.txt')
+
+filename = input("data file's name: ")
+N, K, d, t = create_data(filename)
 
 
 x = np.array([0 for k in range(K)]) #working time of staff k
