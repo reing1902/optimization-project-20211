@@ -1,7 +1,6 @@
 import random as rd
-import os
 
-def gen_data(N, K, filename=None):
+def gen_data_file(N, K, filename=None):
     '''
     Create a txt data file in data folder.
 
@@ -17,7 +16,6 @@ def gen_data(N, K, filename=None):
     if not filename:
         filename = f'N{N}-K{K}.txt'
 
-    os.chdir('data')
     with open(filename, 'w') as f:
         f.write(f'{N} {K}\n')
         for _ in range(N):
@@ -30,11 +28,3 @@ def gen_data(N, K, filename=None):
                 else:
                     f.write(f'{rd.randint(1, 100)} ')
             f.write('\n')
-
-    os.chdir('..')
-
-def main():
-    gen_data(3, 6)
-
-if __name__ == '__main__':
-    main()
