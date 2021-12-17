@@ -21,7 +21,7 @@ generated_data = Data.generated_with(N=6, K=2, seed=42)
 
 ## Solvers
 ```
-from project9.solvers import ip_solver, cp_solver
+from project9.solver import ip_solver, cp_solver
 
 # Solve the problem using the CP solver
 cp_solver(imported_data)
