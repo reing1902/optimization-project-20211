@@ -1,4 +1,4 @@
-from project9.data_model import Data
+from project9.data import Data
 import os
 
 if __name__ == '__main__':
