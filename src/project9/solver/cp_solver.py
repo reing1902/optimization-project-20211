@@ -54,7 +54,7 @@ def cp_solver(data):
         model.Add(sum(x[k][i][0] for i in range(1, data.N+1)) == 1)
 
     for k in range(data.K):
-        model.Add(sum(x[k][i][j]*data.d[j-1] for i in range(data.N+1) for j in range(1, data.N+1) if i != j) == y[k])
+        model.Add(sum(x[k][i][j]*data.d[j] for i in range(data.N+1) for j in range(1, data.N+1) if i != j) == y[k])
 
     for k in range(data.K):
         model.Add(sum(x[k][i][j]*data.t[i][j] for i in range(data.N+1) for j in range(1, data.N+1) if i != j) + y[k] == z[k])

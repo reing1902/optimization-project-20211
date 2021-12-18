@@ -26,7 +26,7 @@ def heuristic_greedy(data):
         # Find the next customer with the smallest travel time + fix time
         knowledge = []
         for l in customers:
-            knowledge.append((l, data.t[i][l] + data.d[l-1]))
+            knowledge.append((l, data.t[i][l] + data.d[l]))
         knowledge.sort(key = lambda item: item[1])
 
         # Assign that customer to the technician and update the solution
@@ -37,9 +37,9 @@ def heuristic_greedy(data):
         # Remove the customer from the list of customers
         customers.remove(j)
 
-    for k in range(data.K):
-        x[k] += data.t[y[k][-1]][0]
-        y[k].append(0)
+    # for k in range(data.K):
+    #     x[k] += data.t[y[k][-1]][0]
+    #     y[k].append(0)
 
     print(f'Optimal cost: {np.max(x)}')
     for k in range(data.K):

@@ -58,16 +58,16 @@ def ip_solver(data):
         c6 = solver.Constraint(0, 0)
         c6.SetCoefficient(y[k], -1)
         for i in range(data.N+1):
-            for j in range(1, data.N+1):
+            for j in range(data.N+1):
                 if i != j:
-                    c6.SetCoefficient(x[k][i][j], data.d[j-1])
+                    c6.SetCoefficient(x[k][i][j], data.d[j])
 
     for k in range(data.K):
         c7 = solver.Constraint(0, 0)
         c7.SetCoefficient(z[k], -1)
         c7.SetCoefficient(y[k], 1)
         for i in range(data.N+1):
-            for j in range(1, data.N+1):
+            for j in range(data.N+1):
                 if i != j:
                     c7.SetCoefficient(x[k][i][j], data.t[i][j])
 
