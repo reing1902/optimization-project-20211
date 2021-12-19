@@ -58,6 +58,7 @@ INF = solver.infinity()
 x = [[[solver.IntVar(0,1, f'x[{u},{i},{j}]') for j in range(N+2*K)] for i in range(N+2*K)] for u in range(K)]
 y = [solver.IntVar(0, total_fix_time, f'y[{k}]') for k in range(K)]
 z = [solver.IntVar(0, K, f'z[{i}]') for i in range(N+2*K)]
+u = [solver.IntVar(0, N-1, f'u[{i}]') for i in range(N)]
 w = [solver.IntVar(0, total_fix_time + total_travel_time, f'w[{k}]') for k in range(K)]
 a = solver.IntVar(0, total_fix_time + total_travel_time, 'a')
 
@@ -102,22 +103,22 @@ for k in range(K):
     cstr = solver.Constraint(k,k)
     cstr.SetCoefficient(z[k+K+N], 1)
 
-# x[k][i][j] = 1 --> sum_{l=1}^N (x[k][j][l]) = 1
+
+# x[k][i][j] = 1 --> u[j] = u[i] + 1
+# M(1-x) + u[j] >= u[i] + 1
+# M(x-1) + u[j] <= u[i] + 1
 for k in range(K):
     for i in range(N):
         for j in range(N):
             cstr = solver.Constraint(-M + 1, INF)
             cstr.SetCoefficient(x[k][i][j], -M)
-            for l in range(N):
-                cstr.SetCoefficient(x[k][j][l], 1)
+            cstr.SetCoefficient(u[j], 1)
+            cstr.SetCoefficient(u[i], -1)
 
-for k in range(K):
-    for i in range(N):
-        for j in range(N):
             cstr = solver.Constraint(-M - 1, INF)
             cstr.SetCoefficient(x[k][i][j], -M)
-            for l in range(N):
-                cstr.SetCoefficient(x[k][j][l], -1)
+            cstr.SetCoefficient(u[j], -1)
+            cstr.SetCoefficient(u[i], 1)
 
 
 for k in range(K):
